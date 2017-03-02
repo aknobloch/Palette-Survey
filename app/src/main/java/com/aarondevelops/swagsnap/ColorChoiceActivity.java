@@ -34,7 +34,7 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
         allSwatches = new TextView[8];
 
-        // Pay attention to this... had no idea this was possible...
+        // had no idea this was possible...
         allSwatches[0] = firstSwatch = (TextView) findViewById(R.id.firstSwatch);
         allSwatches[1] = secondSwatch = (TextView) findViewById(R.id.secondSwatch);
         allSwatches[2] = thirdSwatch = (TextView) findViewById(R.id.thirdSwatch);
@@ -96,7 +96,8 @@ public class ColorChoiceActivity extends AppCompatActivity {
         // check if color has already been selected
         for(int i = 0; i < UserData.chosenColorIndices.size(); i++)
         {
-            if(selectedSwatch.equals(allSwatches[i]))
+            int colorChoice = UserData.chosenColorIndices.get(i);
+            if(selectedSwatch.equals(allSwatches[colorChoice]))
             {
                 return;
             }
