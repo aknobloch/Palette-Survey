@@ -1,10 +1,12 @@
 package com.aarondevelops.swagsnap;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
@@ -18,20 +20,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     static final int PICTURE_REQUEST_CODE = 1;
-    public static final String INTENT_TAG = "Tag for intent";
-    UserData surveyData;
-
+    private static boolean picturePermission = false;
 
     class PaletteListener implements Palette.PaletteAsyncListener
     {
-
-        Context mainActivityContext;
-
-        PaletteListener(Context mainContext)
-        {
-            mainActivityContext = mainContext;
-        }
-
         @Override
         public void onGenerated(Palette palette)
         {
@@ -39,12 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
             for(Palette.Swatch color : colorList)
             {
-                surveyData.addColor(color.getRgb());
+                UserData.colors.add(color.getRgb());
             }
-
-            Intent colorChoiceIntent = new Intent(mainActivityContext, ColorChoiceActivity.class);
-            colorChoiceIntent.putExtra(INTENT_TAG, surveyData);
-            startActivity(colorChoiceIntent);
 
         }
     }
@@ -67,6 +55,36 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    Method to as the user for permission to store their picture.
+     */
+    private void getPicturePermission(Bitmap selfie)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("We'd like to save this picture to see how we did later, is that cool?" +
+                            "You can still help us out either way, so no hard feelings!");
+        builder.setTitle("Privacy Alert!");
+
+        builder.setPositiveButton("Sure!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                MainActivity.picturePermission = true;
+            }
+        });
+
+        builder.setNegativeButton("Nah...", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                MainActivity.picturePermission = false;
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(requestCode != PICTURE_REQUEST_CODE || resultCode != RESULT_OK)
@@ -80,12 +98,11 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = data.getExtras();
         Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-        surveyData = new UserData(imageBitmap);
+        getPicturePermission(imageBitmap);
 
         Palette.Builder imagePalette = new Palette.Builder(imageBitmap);
         imagePalette.maximumColorCount(8);
-        imagePalette.generate(new PaletteListener(this));
-
+        imagePalette.generate(new PaletteListener());
 
     }
 }

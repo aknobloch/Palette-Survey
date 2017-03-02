@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class ColorChoiceActivity extends AppCompatActivity {
 
     TextView firstSwatch;
@@ -23,10 +25,7 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
     TextView[] allSwatches;
 
-    TextView[] userColorChoices;
-    int userTotalChoices = 0;
 
-    UserData surveyData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,6 @@ public class ColorChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_color_choice);
 
         allSwatches = new TextView[8];
-        userColorChoices = new TextView[3];
 
         // Pay attention to this... had no idea this was possible...
         allSwatches[0] = firstSwatch = (TextView) findViewById(R.id.firstSwatch);
@@ -48,17 +46,17 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
         // grab survey data that was passed along
         Intent callingIntent = getIntent();
-        surveyData = (UserData) callingIntent.getSerializableExtra(MainActivity.INTENT_TAG);
 
-        int[] detectedColors = surveyData.getColors();
-        for(int i = 0; i < detectedColors.length; i++)
+        for(int i = 0; i < 8; i++)
         {
-            // occasionally the Palette will not find/contain eight colors
-            if(detectedColors[i] != 0)
+
+            try
             {
-                allSwatches[i].setBackgroundColor(detectedColors[i]);
+                int color = UserData.colors.get(i);
+                allSwatches[i].setBackgroundColor(color);
             }
-            else
+            // occasionally the Palette will not find/contain eight colors
+            catch(IndexOutOfBoundsException iob)
             {
                 // in the case that it doesn't have enough colors, make sure text view is disabled
                 allSwatches[i].setEnabled(false);
@@ -67,10 +65,24 @@ public class ColorChoiceActivity extends AppCompatActivity {
         }
     }
 
+    private int getSwatchIndex(TextView swatch)
+    {
+        for(int i = 0; i < allSwatches.length; i++)
+        {
+            if(swatch.equals(allSwatches[i]))
+            {
+                return i;
+            }
+        }
+
+        // not found
+        return -1;
+    }
+
     public void onSwatchSelect(View view)
     {
         // no more than 3 choices
-        if(userTotalChoices == 3)
+        if(UserData.chosenColorIndices.size() == 3)
         {
             Toast alertToast = Toast.makeText(this,
                     "Only three choices! Clear your choices if you'd like!",
@@ -82,26 +94,25 @@ public class ColorChoiceActivity extends AppCompatActivity {
         TextView selectedSwatch = (TextView) view;
 
         // check if color has already been selected
-        for(int i = 0; i < userTotalChoices; i++)
+        for(int i = 0; i < UserData.chosenColorIndices.size(); i++)
         {
-            if(selectedSwatch.equals(userColorChoices[i]))
+            if(selectedSwatch.equals(allSwatches[i]))
             {
                 return;
             }
         }
 
+        // get selected color
         ColorDrawable color = (ColorDrawable) selectedSwatch.getBackground();
-        userColorChoices[userTotalChoices] = selectedSwatch;
+        UserData.chosenColorIndices.add(getSwatchIndex(selectedSwatch));
 
-        // user total choices starts at zero for indexing, so increment one more
-        selectedSwatch.setText("" + (userTotalChoices + 1));
+        // show selection ranking (1, 2, 3)
+        selectedSwatch.setText("" + UserData.chosenColorIndices.size());
 
         // check luminosity of color choices, set as appropriate
         int textColor = findAppropriateTextColor(color.getColor());
         selectedSwatch.setTextColor(textColor);
 
-        // choices up for next time
-        userTotalChoices++;
     }
 
     private int findAppropriateTextColor(int color)
@@ -128,12 +139,16 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
     public void onClear(View view)
     {
-        userColorChoices = new TextView[3];
-        userTotalChoices = 0;
+        UserData.chosenColorIndices = new ArrayList<>();
 
         for(TextView swatch : allSwatches)
         {
             swatch.setText("");
         }
+    }
+
+    public void onSubmit(View view)
+    {
+
     }
 }
