@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_rating_system"
     android:layout_width="match_parent"
@@ -8,6 +9,95 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.aarondevelops.swagsnap.RatingSystem">
+    tools:context="com.aarondevelops.swagsnap.RatingSystemActivity">
+
+    <TextView
+        android:text="So...how'd we do?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/title"
+        tools:text="So...how'd we do?"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textStyle="normal|bold"
+        android:textSize="40sp" />
+
+    <TextView
+        android:text="@string/rating_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:id="@+id/instructions"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:gravity="center" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/instructions"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp">
+
+        <ImageView
+            app:srcCompat="@android:drawable/btn_star_big_on"
+            android:id="@+id/firstStar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="onStarSelect"
+            android:clickable="true" />
+
+        <ImageView
+            app:srcCompat="@android:drawable/btn_star_big_off"
+            android:id="@+id/secondStar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="onStarSelect"
+            android:clickable="true" />
+
+        <ImageView
+            app:srcCompat="@android:drawable/btn_star_big_off"
+            android:id="@+id/thirdStar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="onStarSelect"
+            android:clickable="true" />
+
+        <ImageView
+            app:srcCompat="@android:drawable/btn_star_big_off"
+            android:id="@+id/fourthStar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="onStarSelect"
+            android:clickable="true" />
+
+        <ImageView
+            app:srcCompat="@android:drawable/btn_star_big_off"
+            android:id="@+id/fifthStar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:onClick="onStarSelect"
+            android:clickable="true" />
+
+    </LinearLayout>
+
+    <Button
+        android:text="Onward!"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/submitButton"
+        tools:text="Onward!"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:background="@drawable/buttonshape"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:onClick="onSubmit" />
 
 </RelativeLayout>

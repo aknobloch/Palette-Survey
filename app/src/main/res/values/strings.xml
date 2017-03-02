@@ -3,4 +3,7 @@
     <string name="pic_instructions">Take a picture of your outfit! Try to get as much of your 
                                     clothes in the picture as you can - we\'ll try to figure out
                                     what colors match your outfit the best!</string>
+    <string name="rating_instructions">Did we manage to accurately find your colors? Be honest,
+                                    you won\'t hurt our feelings!</string>
+    <string name="brightness_instruction">We\'re almost done! How was the brightness for the colors?</string>
 </resources>

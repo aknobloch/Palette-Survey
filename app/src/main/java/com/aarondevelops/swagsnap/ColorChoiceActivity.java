@@ -150,6 +150,7 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
     public void onSubmit(View view)
     {
-
+        Intent ratingIntent = new Intent(this, RatingSystemActivity.class);
+        startActivity(ratingIntent);
     }
 }

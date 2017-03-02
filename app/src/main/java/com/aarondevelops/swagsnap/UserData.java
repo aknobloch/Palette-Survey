@@ -11,10 +11,6 @@ import java.util.ArrayList;
 
 public class UserData implements Serializable
 {
-    enum ColorPreference
-    {
-        LIGHT, DARK, OK;
-    }
 
     static ArrayList<Integer> colors;
     static Bitmap picture;
@@ -22,7 +18,7 @@ public class UserData implements Serializable
     // array, and was their first choice. Second item is the index of their second choice, etc.
     static ArrayList<Integer> chosenColorIndices;
     static int accuracyRating;
-    static ColorPreference luminosityChoice;
+    static String luminosityChoice;
 
     static {
         colors = new ArrayList<>();

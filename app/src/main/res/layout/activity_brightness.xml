@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_brightness"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.aarondevelops.swagsnap.BrightnessActivity">
+
+    <TextView
+        android:text="Was It Lit, Fam?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/heading"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:layout_marginTop="30dp"
+        android:textStyle="normal|bold"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/description"
+        android:text="@string/brightness_instruction" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:checkedButton="@+id/okRadio"
+        android:id="@+id/radioGrouping">
+
+        <RadioButton
+            android:text="Too Dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description"
+            android:layout_alignParentStart="true"
+            android:id="@+id/darkRadio"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:buttonTint="@android:color/holo_blue_dark"/>
+
+        <RadioButton
+            android:text="It's Aight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description"
+            android:layout_alignParentStart="true"
+            android:id="@+id/okRadio"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:buttonTint="@android:color/holo_blue_dark"/>
+
+        <RadioButton
+            android:text="Too Light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description"
+            android:layout_alignParentStart="true"
+            android:id="@+id/lighRadio"
+            android:textSize="30sp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:buttonTint="@android:color/holo_blue_dark" />
+
+
+    </RadioGroup>
+
+    <Button
+        android:text="Finished!"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/submitButton"
+        android:textColor="#333333"
+        android:textSize="15sp"
+        android:background="@drawable/buttonshape"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="25dp"
+        android:onClick="onSubmit" />
+
+</RelativeLayout>
