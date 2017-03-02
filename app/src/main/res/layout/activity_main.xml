@@ -19,7 +19,7 @@
 
 
         <TextView
-            android:text="Snap A Selfie!"
+            android:text="Whatcha' Wearin'?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -28,10 +28,10 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:textStyle="normal|bold"
-            android:textSize="50sp" />
+            android:textAllCaps="false"
+            android:textSize="43sp" />
 
         <TextView
-            android:text="Try to get as much of your outfit into the picture as possible. We'll try to figure out what colors you're wearing!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/greetingLabel"
@@ -42,7 +42,8 @@
             android:layout_marginStart="50dp"
             android:gravity="center_horizontal"
             android:textSize="16sp"
-            tools:text="Try to get as much of your outfit into the picture as possible. We'll try to figure out what colors you're wearing!" />
+            tools:text="@string/pic_instructions"
+            android:text="@string/pic_instructions" />
 
         <Button
             android:text="Take Picture"

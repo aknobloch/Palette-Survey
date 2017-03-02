@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ColorChoiceActivity"></activity>
+        <activity android:name=".ColorChoiceActivity" />
+        <activity android:name=".RatingSystem"></activity>
     </application>
 
 </manifest>

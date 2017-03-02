@@ -23,7 +23,7 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
     TextView[] allSwatches;
 
-    int[] userColorChoices;
+    TextView[] userColorChoices;
     int userTotalChoices = 0;
 
     UserData surveyData;
@@ -34,7 +34,7 @@ public class ColorChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_color_choice);
 
         allSwatches = new TextView[8];
-        userColorChoices = new int[3];
+        userColorChoices = new TextView[3];
 
         // Pay attention to this... had no idea this was possible...
         allSwatches[0] = firstSwatch = (TextView) findViewById(R.id.firstSwatch);
@@ -80,8 +80,18 @@ public class ColorChoiceActivity extends AppCompatActivity {
         }
 
         TextView selectedSwatch = (TextView) view;
+
+        // check if color has already been selected
+        for(int i = 0; i < userTotalChoices; i++)
+        {
+            if(selectedSwatch.equals(userColorChoices[i]))
+            {
+                return;
+            }
+        }
+
         ColorDrawable color = (ColorDrawable) selectedSwatch.getBackground();
-        userColorChoices[userTotalChoices] = color.getColor();
+        userColorChoices[userTotalChoices] = selectedSwatch;
 
         // user total choices starts at zero for indexing, so increment one more
         selectedSwatch.setText("" + (userTotalChoices + 1));
@@ -118,7 +128,7 @@ public class ColorChoiceActivity extends AppCompatActivity {
 
     public void onClear(View view)
     {
-        userColorChoices = new int[3];
+        userColorChoices = new TextView[3];
         userTotalChoices = 0;
 
         for(TextView swatch : allSwatches)
