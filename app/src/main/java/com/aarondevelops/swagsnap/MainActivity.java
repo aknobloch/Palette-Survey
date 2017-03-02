@@ -10,17 +10,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
+import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     static final int PICTURE_REQUEST_CODE = 1;
-    private static boolean picturePermission = false;
 
     class PaletteListener implements Palette.PaletteAsyncListener
     {
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
             {
                 UserData.colors.add(color.getRgb());
             }
-
         }
     }
 
@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
     /*
     Method to as the user for permission to store their picture.
      */
-    private void getPicturePermission(Bitmap selfie)
+    private void savePictureDialog(final Bitmap selfie)
     {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-        builder.setMessage("We'd like to save this picture to see how we did later, is that cool?" +
+        AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+        builder.setMessage("We'd like to save this picture to see how we did later, is that cool? " +
                             "You can still help us out either way, so no hard feelings!");
         builder.setTitle("Privacy Alert!");
 
@@ -69,7 +69,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                MainActivity.picturePermission = true;
+                UserData.picture = selfie;
+
+                Intent launchColorChoice = new Intent(getApplicationContext(), ColorChoiceActivity.class);
+                startActivity(launchColorChoice);
             }
         });
 
@@ -77,12 +80,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which)
             {
-                MainActivity.picturePermission = false;
+                UserData.picture = selfie;
+
+                Intent launchColorChoice = new Intent(getApplicationContext(), ColorChoiceActivity.class);
+                startActivity(launchColorChoice);
             }
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
+
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -98,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle extras = data.getExtras();
         Bitmap imageBitmap = (Bitmap) extras.get("data");
 
-        getPicturePermission(imageBitmap);
+        savePictureDialog(imageBitmap);
 
         Palette.Builder imagePalette = new Palette.Builder(imageBitmap);
         imagePalette.maximumColorCount(8);
