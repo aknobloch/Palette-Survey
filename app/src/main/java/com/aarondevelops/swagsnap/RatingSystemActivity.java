@@ -1,5 +1,8 @@
 package com.aarondevelops.swagsnap;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RatingSystemActivity extends AppCompatActivity {
 
@@ -53,8 +59,29 @@ public class RatingSystemActivity extends AppCompatActivity {
                 shouldHighlight = false;
                 // plus one for zero index
                 UserData.accuracyRating = (i + 1);
+
+                pulseAnimateObject(currentStar);
             }
         }
+    }
+
+    private void pulseAnimateObject(ImageView animationTarget)
+    {
+        ObjectAnimator animatorX = ObjectAnimator.ofFloat(animationTarget, "scaleX", 1.1f)
+                .setDuration(200);
+
+        ObjectAnimator animatorY = ObjectAnimator.ofFloat(animationTarget, "scaleY", 1.1f)
+                .setDuration(200);
+
+        animatorX.setRepeatCount(1);
+        animatorY.setRepeatCount(1);
+
+        animatorX.setRepeatMode(ValueAnimator.REVERSE);
+        animatorY.setRepeatMode(ValueAnimator.REVERSE);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animatorX, animatorY);
+        animatorSet.start();
     }
 
     public void onSubmit(View view)
